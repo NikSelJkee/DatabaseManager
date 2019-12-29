@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Configuration;
+using System.Data.SqlClient;
+using System.Data.Linq;
 
 namespace DatabaseManager
 {
@@ -23,9 +25,14 @@ namespace DatabaseManager
     {
         string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
+        List<string> tables;
+
         public MainWindow()
         {
             InitializeComponent();
+            tables = new List<string>();
+
+            ConnectionToDatabase();
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -40,7 +47,34 @@ namespace DatabaseManager
 
             if (settingsWindow.ShowDialog() == true)
             {
+                ConnectionToDatabase();
+            }
+        }
 
+        private void ConnectionToDatabase()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string sqlExpression = "SELECT * FROM sys.tables WHERE type_desc='USER_TABLE'";
+
+                    SqlCommand command = new SqlCommand(sqlExpression, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        tables.Add(reader.GetString(0));
+                    }
+
+                    ListOfTables.ItemsSource = tables;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Проверьте правильность ввода строки подкючения");
             }
         }
     }
