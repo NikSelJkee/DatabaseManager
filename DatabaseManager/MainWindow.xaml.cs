@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Data.Linq;
+using System.Data;
 
 namespace DatabaseManager
 {
@@ -64,6 +65,8 @@ namespace DatabaseManager
                     SqlCommand command = new SqlCommand(sqlExpression, connection);
                     SqlDataReader reader = command.ExecuteReader();
 
+                    tables.Clear();
+
                     while (reader.Read())
                     {
                         tables.Add(reader.GetString(0));
@@ -75,6 +78,22 @@ namespace DatabaseManager
             catch
             {
                 MessageBox.Show("Проверьте правильность ввода строки подкючения");
+            }
+        }
+
+        private void ListOfTables_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string sqlExpression = string.Format("SELECT * FROM {0}", ListOfTables.SelectedItem.ToString());
+
+                SqlDataAdapter adapter = new SqlDataAdapter(sqlExpression, connection);
+                DataSet ds = new DataSet();
+                adapter.Fill(ds);
+                Table.ItemsSource = ds.Tables[0].AsDataView();
+                Table.Columns[0].IsReadOnly = true;
             }
         }
     }

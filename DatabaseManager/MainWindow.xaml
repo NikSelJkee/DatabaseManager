@@ -23,14 +23,14 @@
                 </Button.Background>
             </Button>
         </StackPanel>
-        <DataGrid Grid.Column="1" Background="White"/>
+        <DataGrid x:Name="Table" SelectionMode="Single" Grid.Column="1" Background="White"/>
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.1*"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="Список таблиц" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Black"/>
-            <ListBox x:Name="ListOfTables" Grid.Row="1" Margin="5" BorderThickness="1" BorderBrush="Black"/>
+            <ListBox x:Name="ListOfTables" Grid.Row="1" Margin="5" BorderThickness="1" BorderBrush="Black" SelectionMode="Single" SelectionChanged="ListOfTables_SelectionChanged"/>
         </Grid>
     </Grid>
 </Window>
