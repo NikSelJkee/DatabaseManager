@@ -1,0 +1,36 @@
+﻿<Window x:Class="DatabaseManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DatabaseManager"
+        mc:Ignorable="d" Height="1080" Width="1920" WindowStartupLocation="CenterScreen" WindowStyle="None" WindowState="Maximized">
+    <Grid ShowGridLines="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.1*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0.25*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Orientation="Vertical">
+            <Button x:Name="ExitButton" Style="{StaticResource MyButtonStyle}" Width="50" Height="50" Margin="0,25,0,0" Click="ExitButton_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://application:,,,/Resources/exit.png"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="SettingButton" Style="{StaticResource MyButtonStyle}" Width="50" Height="50" Margin="0,50,0,0" Click="SettingButton_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://application:,,,/Resources/settings.png"/>
+                </Button.Background>
+            </Button>
+        </StackPanel>
+        <DataGrid Grid.Column="1" Background="White"/>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.1*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="Список таблиц" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Black"/>
+            <ListBox x:Name="ListOfTables" Grid.Row="1" Margin="5" BorderThickness="1" BorderBrush="Black"/>
+        </Grid>
+    </Grid>
+</Window>
