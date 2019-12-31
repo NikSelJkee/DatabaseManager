@@ -25,6 +25,11 @@ namespace DatabaseManager
     public partial class MainWindow : Window
     {
         string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        string sqlExpression;
+
+        SqlDataAdapter adapter;
+        SqlCommandBuilder builder;
+        DataSet ds;
 
         List<string> tables;
 
@@ -60,7 +65,7 @@ namespace DatabaseManager
                 {
                     connection.Open();
 
-                    string sqlExpression = "SELECT * FROM sys.tables WHERE type_desc='USER_TABLE'";
+                    sqlExpression = "SELECT * FROM sys.tables WHERE type_desc='USER_TABLE'";
 
                     SqlCommand command = new SqlCommand(sqlExpression, connection);
                     SqlDataReader reader = command.ExecuteReader();
@@ -87,13 +92,34 @@ namespace DatabaseManager
             {
                 connection.Open();
 
-                string sqlExpression = string.Format("SELECT * FROM {0}", ListOfTables.SelectedItem.ToString());
+                sqlExpression = string.Format("SELECT * FROM {0}", ListOfTables.SelectedItem.ToString());
 
-                SqlDataAdapter adapter = new SqlDataAdapter(sqlExpression, connection);
-                DataSet ds = new DataSet();
+                adapter = new SqlDataAdapter(sqlExpression, connection);
+                ds = new DataSet();
                 adapter.Fill(ds);
                 Table.ItemsSource = ds.Tables[0].AsDataView();
                 Table.Columns[0].IsReadOnly = true;
+            }
+        }
+
+        private void Table_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    sqlExpression = string.Format("SELECT * FROM {0}", ListOfTables.SelectedItem.ToString());
+
+                    adapter = new SqlDataAdapter(sqlExpression, connection);
+                    builder = new SqlCommandBuilder(adapter);
+
+                    adapter.UpdateCommand = builder.GetUpdateCommand();
+                    adapter.Update(ds);
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Убедитесь, что в вашей таблице определен первичный ключ");
             }
         }
     }

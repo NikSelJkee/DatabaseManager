@@ -23,7 +23,7 @@
                 </Button.Background>
             </Button>
         </StackPanel>
-        <DataGrid x:Name="Table" SelectionMode="Single" Grid.Column="1" Background="White"/>
+        <DataGrid x:Name="Table" SelectionMode="Single" Grid.Column="1" Background="White" SelectedCellsChanged="Table_SelectedCellsChanged"/>
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.1*"/>
