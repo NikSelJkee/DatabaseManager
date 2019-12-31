@@ -102,7 +102,23 @@ namespace DatabaseManager
             }
         }
 
-        private void Table_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        private void AddRowButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    DataRow row = ds.Tables[0].NewRow();
+                    ds.Tables[0].Rows.Add(row);
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Для добавления строки выберите таблицу");
+            }
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {

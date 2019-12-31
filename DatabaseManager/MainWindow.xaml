@@ -12,18 +12,28 @@
             <ColumnDefinition Width="0.25*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" Orientation="Vertical">
-            <Button x:Name="ExitButton" Style="{StaticResource MyButtonStyle}" Width="50" Height="50" Margin="0,25,0,0" Click="ExitButton_Click">
+            <Button x:Name="ExitButton" ToolTip="Выход" Style="{StaticResource MyButtonStyle}" Width="50" Height="50" Margin="0,25,0,0" Click="ExitButton_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="pack://application:,,,/Resources/exit.png"/>
                 </Button.Background>
             </Button>
-            <Button x:Name="SettingButton" Style="{StaticResource MyButtonStyle}" Width="50" Height="50" Margin="0,50,0,0" Click="SettingButton_Click">
+            <Button x:Name="RefreshButton" ToolTip="Обновить базу данных" Style="{StaticResource MyButtonStyle}" Width="50" Height="50" Margin="0,50,0,0" Click="RefreshButton_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://application:,,,/Resources/refresh.png"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="AddRowButton" ToolTip="Добавить строку в таблицу" Style="{StaticResource MyButtonStyle}" Width="50" Height="50" Margin="0,25,0,0" Click="AddRowButton_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://application:,,,/Resources/plus.png"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="SettingButton" ToolTip="Настройки" Style="{StaticResource MyButtonStyle}" Width="50" Height="50" Margin="0,50,0,0" Click="SettingButton_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="pack://application:,,,/Resources/settings.png"/>
                 </Button.Background>
             </Button>
         </StackPanel>
-        <DataGrid x:Name="Table" SelectionMode="Single" Grid.Column="1" Background="White" SelectedCellsChanged="Table_SelectedCellsChanged"/>
+        <DataGrid x:Name="Table" SelectionMode="Single" Grid.Column="1" Background="White" CanUserAddRows="False"/>
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.1*"/>
