@@ -27,6 +27,11 @@
                     <ImageBrush ImageSource="pack://application:,,,/Resources/plus.png"/>
                 </Button.Background>
             </Button>
+            <Button x:Name="RemoveRowButton" ToolTip="Удалить строку в таблицу" Style="{StaticResource MyButtonStyle}" Width="50" Height="50" Margin="0,25,0,0" Click="RemoveRowButton_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://application:,,,/Resources/trash.png"/>
+                </Button.Background>
+            </Button>
             <Button x:Name="SettingButton" ToolTip="Настройки" Style="{StaticResource MyButtonStyle}" Width="50" Height="50" Margin="0,50,0,0" Click="SettingButton_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="pack://application:,,,/Resources/settings.png"/>

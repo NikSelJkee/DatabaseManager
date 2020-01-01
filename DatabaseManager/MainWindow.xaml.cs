@@ -114,7 +114,7 @@ namespace DatabaseManager
             }
             catch
             {
-                MessageBox.Show("Для добавления строки выберите таблицу");
+                MessageBox.Show("Выберите таблицу для добавления строки");
             }
         }
 
@@ -124,6 +124,8 @@ namespace DatabaseManager
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
+                    connection.Open();
+
                     sqlExpression = string.Format("SELECT * FROM {0}", ListOfTables.SelectedItem.ToString());
 
                     adapter = new SqlDataAdapter(sqlExpression, connection);
@@ -136,6 +138,18 @@ namespace DatabaseManager
             catch
             {
                 MessageBox.Show("Убедитесь, что в вашей таблице определен первичный ключ");
+            }
+        }
+
+        private void RemoveRowButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ds.Tables[0].Rows[Table.SelectedIndex].Delete();
+            }
+            catch
+            {
+                MessageBox.Show("Выберите строку для удаления");
             }
         }
     }
